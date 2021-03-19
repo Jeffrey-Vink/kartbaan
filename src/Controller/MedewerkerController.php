@@ -168,6 +168,10 @@ class MedewerkerController extends AbstractController
 
         $a=new Soortactiviteit();
 
+        $activiteiten=$this->getDoctrine()
+            ->getRepository('App:Activiteit')
+            ->findAll();
+
         $form = $this->createForm(SoortactiviteitType::class, $a);
         $form->add('save', SubmitType::class, array('label'=>"voeg toe"));
 
@@ -180,6 +184,10 @@ class MedewerkerController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('kartactiviteiten');
         }
-        return $this->render('medewerker/nieuwSA.html.twig',array('boodschap'=>'Voeg een nieuwe Activiteit toe','form'=>$form->createView(),));
+        return $this->render('medewerker/nieuwSA.html.twig',[
+            'boodschap'=>'Voeg een nieuwe Activiteit toe',
+            'form'=>$form->createView(),
+            'activiteiten' => $activiteiten,
+        ]);
     }
 }

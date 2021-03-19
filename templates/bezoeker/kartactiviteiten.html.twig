@@ -11,11 +11,17 @@
     <section >
         <article>
             <h3>Er zijn {{ soortactiviteiten|length }} soorten activiteiten </h3>
-            <ul class="list-group">
+            <table class="table">
                 {% for activiteit in soortactiviteiten %}
-                    <li class="list-group-item text-primary">{{ activiteit.naam }}</li>
+                    <tr>
+                        <td>{{ activiteit.naam }}</td>
+{#                        <td>{{ activiteit.beschrijving }}</td>#}
+                        <td>{{ activiteit.prijs }}</td>
+                        <td>{{ activiteit.tijdsduur }}</td>
+                        <td>{{ activiteit.minLeeftijd }}</td>
+                    </tr>
                 {% endfor %}
-            </ul>
+            </table>
             <p>
                 Let op, voor het karten zijn dichte schoenen verplicht.
                 Karten met een korte broek is niet toegestaan. Wij hebben overalls ter beschikking,

@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 /**
@@ -74,5 +78,28 @@ class DeelnemerController extends AbstractController
         $em->persist($user);
         $em->flush();
         return $this->redirectToRoute('activiteiten');
+    }
+
+    /**
+     * @Route("/account", name="user_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request,  UserPasswordEncoderInterface $passwordEncoder): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $gebruiker = $form->getData();
+            $gebruiker->setPassword($passwordEncoder->encodePassword($gebruiker, $gebruiker->getPassword()));
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('activiteiten');
+        }
+
+        return $this->render('user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
     }
 }

@@ -38,7 +38,8 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
                         {% block menu %}
-
+                            <li><a href="{{ path('activiteiten') }}">home</a></li>
+                            <li><a href="{{ path('user_edit') }}">account</a></li>
                         {% endblock %}
 
                     </ul>

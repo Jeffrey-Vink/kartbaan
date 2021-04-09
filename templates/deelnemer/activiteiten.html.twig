@@ -39,11 +39,11 @@
                         &euro;{{ activiteit.soort.prijs|number_format(2,',','.')}}
                     </td>
                     <td title="schrijf in voor activiteit">
-
-
-                        <a href="{{ path('inschrijven', {'id':activiteit.id}) }}" >
-                            <span class="glyphicon glyphicon-plus" style="color:red"></span>
-                        </a>
+                        {% if activiteit.datum < date() %}
+                            <a href="{{ path('inschrijven', {'id':activiteit.id}) }}" >
+                                <span class="glyphicon glyphicon-plus" style="color:red"></span>
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

@@ -61,7 +61,7 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            return $this->render('bezoeker/nieuwSA.html.twig');
+            return $this->render('bezoeker/index.html.twig');
         }
         return $this->render('security/registreren.html.twig', [
             'form' => $form->createView(),
